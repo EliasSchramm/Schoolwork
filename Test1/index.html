@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Tets</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="dummy">
+    <!-- Seitliche linie -->
+
+    <svg id="modern_line">
+        <polyline id="modern_line_l1" points="" stroke="url(#linear)" style="stroke-width:3" fill-opacity="0"/>
+        <linearGradient id="linear" gradientTransform="rotate(90)">
+           <stop id="stop1" offset="0%" stop-color="#fff"  />
+           <stop id="stop2" offset="100%" stop-color="#fff"/>
+        </linearGradient>
+        Sorry, your browser does not support inline SVG.
+      </svg>
+
+      <!-- Inhalt    -->
+
+    <h1>Unsere Produkte</h1>
+    <hr>
+    <p>Für uns von der ist die Versorgung unserer Kunden mit allem Erdenklichen das Wichtigste. <br>
+        Hier können sie unsere Produkte betrachten.
+    </p>
+
+    <div class="standart">
+      <ul>
+        <input type="checkbox" id="mehl"/>
+        <div class="diver">
+          <label for="mehl">
+          <li class="upper">
+            Mehl
+            <ul class="inv">
+              <li>Weizenmehl 1KG <span class="costs">1.45€</span></li>
+              <li>Roggenmehl 1KG <span class="costs">1.99€</span></li>
+              <li>Reismehl 1KG <span class="costs">7.99€</span></li>
+            </ul>
+          </li>
+          </label>
+
+        </div>
+
+        <input type="checkbox" id="milch"/>
+        <div class="diver">
+          <label for="milch">
+          <li class="upper">
+            Milch
+            <ul class="inv">
+              <li>MIO 1KG <span class="costs">1.45€</span></li>
+              <li>Roggenmehl 1KG <span class="costs">1.99€</span></li>
+              <li>Reismehl 1KG <span class="costs">7.99€</span></li>
+            </ul>
+          </li>
+          </label>
+        </div>
+
+
+
+
+
+
+      </ul>
+    </div>
+
+
+
+
+    <!-- Scripts -->
+
+    <script type="text/javascript">
+      let svg_line_l1 = document.getElementById('modern_line_l1');
+      let svg_line = document.getElementById('modern_line');
+
+
+
+
+
+      generateSVGline(svg_line_l1);
+
+      function generateSVGline(svg) {
+        let points = "20,0";
+        let height = 0;
+        let width = 20;
+
+        let temp_bool = true;
+        let random = 0;
+        svg_line.setAttribute("height" , document.body.clientHeight);
+        while(height < document.body.clientHeight){
+          random = getRandomInt(100, 200);
+          height += random;
+
+          if(temp_bool){
+            height -= random/2;
+
+            random = getRandomInt(-120, 120)
+
+            if(between(random, -80,80) ){
+                if(random <= 0){
+                  random = -80;
+
+                }
+                if(random > 0){
+                  random = 80;
+                }
+            }
+
+            width += random;
+
+            if(width > 250){
+              width = 250;
+              width -= random;
+            }
+            if(width < 20){
+              width = 20;
+              width -= random;
+            }
+
+
+            temp_bool = !temp_bool;
+          }else{
+            temp_bool = !temp_bool;
+          }
+
+
+          points += " "+width+","+height;
+
+
+        }
+        svg.setAttribute("points", points);
+
+      }
+
+      function getRandomInt(min, max) {
+          min = Math.ceil(min);
+          max = Math.floor(max);
+          return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      function between(x, min, max) {
+        return x >= min && x <= max;
+      }
+
+      generateSVGline(svg_line_l1);
+    </script>
+    </div>
+  </body>
+</html>

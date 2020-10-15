@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Cryptographie</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <div class="dummy">
+    <!-- Seitliche linie -->
+
+    <img src="media/abstract.png" alt="">
+
+    <svg id="modern_line">
+        <polyline id="modern_line_l1" points="" stroke="url(#linear)" style="stroke-width:3" fill-opacity="0"/>
+        <linearGradient id="linear" gradientTransform="rotate(90)">
+           <stop id="stop1" offset="0%" stop-color="#fff"  />
+           <stop id="stop2" offset="100%" stop-color="#fff"/>
+        </linearGradient>
+        Sorry, your browser does not support inline SVG.
+      </svg>
+
+      <!-- Inhalt    -->
+
+    <h1>Cryptographie</h1>
+    <hr>
+    <p class="animated test1" animated="INFORMATIONEN;%/VERSTECKEN)1;UND;V3RSCHL31ERN" sec="100" index="0" subindex="0" hold="700" reverse="40">
+    </p>
+    <hr>
+    <div class="standart">
+      <h2>Was ist Cryptographie?</h2>
+
+      <p>
+        Als Cryptographie wird alles bezeichnet, dass darauf abziehlt
+        Informationen so unkenntlich zu machen, dass kein Dritter sie interpretieren kann.
+      </p>
+
+      <h2>Einfache Beispiele</h2>
+
+      <p>
+        Eine der wohl simpelsten Art und Weisen einen Text zu verschlüsseln ist das inkrementieren der Buchstaben um einen bestimmten Wert.
+      </p>
+
+      <p>
+        (1) A -> B <br>
+        (3) A -> D <br>
+        (-1) A -> Z <br>
+      </p>
+
+      <p>
+        Beispiel: <br>
+        Orginal: "Ich bin eine Nachicht" <br>
+        (1) "Jdi cjo fjof Obdijdiu" <br>
+      </p>
+
+    </div>
+
+
+
+    <footer>
+      <hr>
+      <p>Design by <a href="https://eps-dev.de" target="_blank">EPS-DEV</a></p>
+    </footer>
+
+
+
+
+    <!-- Scripts -->
+
+    <script type="text/javascript">
+      let svg_line_l1 = document.getElementById('modern_line_l1');
+      let svg_line = document.getElementById('modern_line');
+
+      generateSVGline(svg_line_l1);
+
+      function generateSVGline(svg) {
+        let points = "20,0";
+        let height = 0;
+        let width = 20;
+
+        let temp_bool = true;
+        let random = 0;
+        svg_line.setAttribute("height" , document.body.clientHeight);
+        while(height < document.body.clientHeight){
+          random = getRandomInt(100, 200);
+          height += random;
+
+          if(temp_bool){
+            height -= random/2;
+
+            random = getRandomInt(-120, 120)
+
+            if(between(random, -80,80) ){
+                if(random <= 0){
+                  random = -80;
+
+                }
+                if(random > 0){
+                  random = 80;
+                }
+            }
+
+            width += random;
+
+            if(width > 250){
+              width = 250;
+              width -= random;
+            }
+            if(width < 20){
+              width = 20;
+              width -= random;
+            }
+
+
+            temp_bool = !temp_bool;
+          }else{
+            temp_bool = !temp_bool;
+          }
+
+
+          points += " "+width+","+height;
+
+
+        }
+        svg.setAttribute("points", points);
+
+      }
+
+      function getRandomInt(min, max) {
+          min = Math.ceil(min);
+          max = Math.floor(max);
+          return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      function between(x, min, max) {
+        return x >= min && x <= max;
+      }
+
+      generateSVGline(svg_line_l1);
+    </script>
+
+    <script type="text/javascript">
+  var text_array = document.getElementsByClassName('animated');
+var timers = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var in_hold = [false,false,false,false,false,false,false,false]
+var in_reverse = [false,false,false,false,false,false,false,false]
+
+const interval = setInterval(function() {
+for (var i = 0; i < text_array.length; i++) {
+    update(text_array[i],i);
+    timers[i] = timers[i] + 20;
+}
+}, 20);
+
+function update(element, index) {
+let text = element.getAttribute("animated");
+let hold = parseInt(element.getAttribute("hold"))
+let reverse = parseInt(element.getAttribute("reverse"))
+text = text.split(";");
+let animations = text.length;
+let e_index = parseInt(element.getAttribute("index"))
+text = text[e_index];
+let temp = text.split("");
+let e_subIndex = parseInt(element.getAttribute("subindex"))
+
+text = "";
+
+for (var j = 0; j < e_subIndex; j++) {
+  text += temp[j];
+}
+
+element.innerHTML = text + "_"
+
+if(timers[index] >= element.getAttribute("sec") && in_hold[index] != true && in_reverse != true){
+  timers[index] = 0;
+  let sub_index = parseInt(element.getAttribute("subindex"))
+
+  if(sub_index >= temp.length){
+    if(hold == 0){
+      sub_index = -1;
+      element.setAttribute("index",  e_index + 1)
+      if(e_index + 1 >= animations){
+        element.setAttribute("index",  0)
+      }
+    }else {
+      in_hold[index] = true;
+    }
+  }
+
+  if(!(sub_index >= temp.length)){
+    element.setAttribute("subindex",  sub_index + 1)
+  }
+
+}
+
+if(in_reverse[index]){
+
+  if(timers[index] >= reverse){
+
+    if((e_subIndex - 1) > 0){
+      element.setAttribute("subindex", e_subIndex - 1)
+    }else {
+      element.setAttribute("subindex", 0)
+      in_reverse[index] = false;
+
+      if(e_index + 1 >= animations){
+        element.setAttribute("index",  0)
+      }else {
+        element.setAttribute("index",  e_index + 1)
+      }
+
+    }
+
+
+
+    timers[index] = 0;
+  }
+}
+
+if(in_hold[index] && in_reverse[index] != true){
+  if(timers[index] >= hold){
+
+    timers[index] = 0;
+    in_hold[index] = false;
+
+    if(reverse == -1){
+
+      element.setAttribute("subindex", 0)
+
+      element.setAttribute("index",  e_index + 1)
+      if(e_index + 1 >= animations){
+
+        element.setAttribute("index",  0)
+      }
+
+    }else {
+      in_reverse[index] = true;
+    }
+
+  }
+}
+
+
+}
+
+  </script>
+
+    </div>
+  </body>
+</html>
